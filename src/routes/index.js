@@ -1,5 +1,6 @@
 import HeaderOnly from '~/components/Layouts/HeaderOnly';
 
+// Pages
 import Home from '~/pages/Home';
 import Following from '~/pages/Following';
 import Profile from '~/pages/Profile';
@@ -32,6 +33,7 @@ const publicRoutes = [
     },
 ];
 
+// public routes
 const privateRoutes = [];
 
 export { publicRoutes, privateRoutes };
