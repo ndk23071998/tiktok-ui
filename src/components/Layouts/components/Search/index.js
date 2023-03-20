@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 
+import * as searchServices from '~/apiServices/searchServices';
 import { SearchIcon } from '~/components/Icons';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
@@ -33,17 +34,15 @@ function Search() {
 
         setShowLoading(true);
 
-        fetch(
-            `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debouncedSearchValue)}&type=less`,
-        )
-            .then((response) => response.json())
-            .then((response) => {
-                setSearchResult(response.data);
-                setShowLoading(false);
-            })
-            .catch(() => {
-                setShowLoading(false);
-            });
+        const fetchApi = async () => {
+            setShowLoading(true);
+
+            const result = await searchServices.search(debouncedSearchValue);
+            setSearchResult(result);
+            setShowLoading(false);
+        };
+
+        fetchApi();
     }, [debouncedSearchValue]);
 
     // Handle hide search result when click outsite
