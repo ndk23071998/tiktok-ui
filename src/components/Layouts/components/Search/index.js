@@ -8,6 +8,7 @@ import { SearchIcon } from '~/components/Icons';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import styles from './Search.module.scss';
+import { useDebounce } from '~/components/myHooks';
 
 const cx = classNames.bind(styles);
 
@@ -20,17 +21,21 @@ function Search() {
 
     const [showLoading, setShowLoading] = useState(false);
 
+    const debouncedSearchValue = useDebounce(searchValue, 700);
+
     const inputRef = useRef();
 
     useEffect(() => {
-        if (!searchValue.trim()) {
+        if (!debouncedSearchValue.trim()) {
             setSearchResult([]);
             return;
         }
 
         setShowLoading(true);
 
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
+        fetch(
+            `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debouncedSearchValue)}&type=less`,
+        )
             .then((response) => response.json())
             .then((response) => {
                 setSearchResult(response.data);
@@ -39,7 +44,7 @@ function Search() {
             .catch(() => {
                 setShowLoading(false);
             });
-    }, [searchValue]);
+    }, [debouncedSearchValue]);
 
     // Handle hide search result when click outsite
     const handleHideSearchResult = () => {
