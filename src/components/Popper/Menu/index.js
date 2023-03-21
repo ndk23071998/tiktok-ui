@@ -6,12 +6,13 @@ import MenuItem from './MenuItem';
 import styles from './Menu.module.scss';
 import Header from './Header';
 import { useState } from 'react';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
 const defaultFn = () => {};
 
-function Menu({ children, menuItems = [], onChange = defaultFn }) {
+function Menu({ children, menuItems = [], hideOnClick = false, onChange = defaultFn }) {
     const [history, setHistory] = useState([{ items: menuItems }]);
     const current = history[history.length - 1];
 
@@ -37,8 +38,9 @@ function Menu({ children, menuItems = [], onChange = defaultFn }) {
     return (
         <Tippy
             interactive
-            delay={[0, 700]}
+            delay={[0, 500]}
             offset={[12, 8]}
+            hideOnClick={hideOnClick}
             placement="bottom-end"
             onHide={() => {
                 setHistory((prev) => prev.slice(0, 1));
