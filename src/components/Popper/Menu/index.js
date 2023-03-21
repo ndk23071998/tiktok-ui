@@ -6,7 +6,6 @@ import MenuItem from './MenuItem';
 import styles from './Menu.module.scss';
 import Header from './Header';
 import { useState } from 'react';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
