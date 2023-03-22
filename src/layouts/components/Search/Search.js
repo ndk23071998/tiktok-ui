@@ -18,7 +18,7 @@ function Search() {
 
     const [searchResult, setSearchResult] = useState([]);
 
-    const [showSearchResult, setShowSearchResult] = useState(true);
+    const [showSearchResult, setShowSearchResult] = useState(false);
 
     const [showLoading, setShowLoading] = useState(false);
 
