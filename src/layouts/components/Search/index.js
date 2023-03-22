@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 
-import * as searchServices from '~/apiServices/searchServices';
+import * as searchService from '~/services/search';
 import { SearchIcon } from '~/components/Icons';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
@@ -37,7 +37,7 @@ function Search() {
         const fetchApi = async () => {
             setShowLoading(true);
 
-            const result = await searchServices.search(debouncedSearchValue);
+            const result = await searchService.search(debouncedSearchValue);
             setSearchResult(result);
             setShowLoading(false);
         };
@@ -71,15 +71,14 @@ function Search() {
         <div>
             <HeadlessTippy
                 interactive
-                visible={showSearchResult && searchResult.length > 0}
+                visible={showSearchResult && searchResult && searchResult.length > 0}
                 onClickOutside={handleHideSearchResult}
                 render={(attrs) => (
                     <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                         <PopperWrapper>
                             <h4 className={cx('search-title')}>Accounts</h4>
-                            {searchResult.map((result) => (
-                                <AccountItem key={result.id} data={result} />
-                            ))}
+                            {searchResult &&
+                                searchResult.map((result) => <AccountItem key={result.id} data={result} />)}
                         </PopperWrapper>
                     </div>
                 )}
